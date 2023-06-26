@@ -5,6 +5,7 @@ import { getPicture } from './services/getPicture';
 import MyLoader from './Loader/Loader';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
 import styles from './App.module.css';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
   state = {
@@ -78,5 +79,21 @@ class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  page: PropTypes.number.isRequired,
+  searchText: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isFirstLoad: PropTypes.bool.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  handleLoadMore: PropTypes.func.isRequired,
+};
 
 export default App;
