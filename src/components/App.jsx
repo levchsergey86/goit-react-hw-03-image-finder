@@ -14,6 +14,7 @@ class App extends React.Component {
     searchText: '',
     isLoading: false,
     isFirstLoad: true,
+    totalHits: 0,
   };
 
   handleSearch = searchText => {
@@ -46,6 +47,7 @@ class App extends React.Component {
           page: page,
           isLoading: false,
           isFirstLoad: false,
+          totalHits: data.totalHits,
         }));
       })
       .catch(error => {
@@ -55,7 +57,9 @@ class App extends React.Component {
   };
 
   render() {
-    const { images, isLoading, isFirstLoad } = this.state;
+    const { images, isLoading, isFirstLoad, totalHits } = this.state;
+    const loadedImagesCount = images.length;
+    const showLoadMoreButton = loadedImagesCount < totalHits;
 
     return (
       <div className={styles.App}>
@@ -70,7 +74,9 @@ class App extends React.Component {
             {images.length > 0 && (
               <>
                 <Gallery images={images} />
-                <LoadMoreButton onClick={this.handleLoadMore} />
+                {showLoadMoreButton && (
+                  <LoadMoreButton onClick={this.handleLoadMore} />
+                )}
               </>
             )}
           </>
